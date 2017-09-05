@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Insert title here</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		
+		<script>
+
+		$(document).ready(function(){
+
+
+			$( "#target" ).submit(function( event ) {
+				var tradeValue = jQuery("#tradeValue").val();
+				var settleDate = jQuery("#settleDate").val();
+				var tradeDate = jQuery("#tradeDate").val();
+				var accountName = jQuery("#accountName").val();
+				var quantity = jQuery("#quantity").val();
+				var itemType = jQuery("#itemType").val();
+				var securityDescription = jQuery("#securityDescription").val();
+				var tradeID = jQuery("#tradeID").val();
+				
+			var dateTimeNow = new Date();
+			
+			$.ajax({
+			    type: 'POST',
+			    url: 'http://tradeflowhq.ie/API_test/ci/index.php/site/options',
+			    crossDomain: true,
+			    data: {
+			    	"tfl_tradeID": tradeID,
+					"tfl_appid":"StateStreet",
+					"tfl_sysid":"tradeSupportStage",
+					"tfl_dt": dateTimeNow,
+					"tfl_uid":"joan1982",
+					"tfl_payload": tradeValue,
+					"tfl_settleDate": settleDate,
+					"tfl_tradeDate": tradeDate,
+					"tfl_accountName": accountName,
+					"tfl_quantity": quantity,
+					"tfl_itemtype": itemType,
+					"tfl_securityDescription": securityDescription
+					},
+			    dataType: 'json',
+			  //  $.support.cors = true; 
+			    success: function(responseData, textStatus, jqXHR) {
+			       alert(responseData);
+			    },
+			    error: function (responseData, textStatus, errorThrown) {
+			        alert('POST success.'); 
+			       
+			    }
+			}); 
+
+			event.preventDefault();
+			});
+
+		}); // doc.ready end
+		
+		</script>
+	</head>
+	<body>
+	
+		 <form id="target">
+			  Settle date: <input type="date" name="settleDate" id="settleDate"><br>
+			  Trade date: <input type="date" name="tradeDate" id="tradeDate"><br>
+			  Account name: <input type="text" name="accountName" id="accountName"><br>
+			  Quantity: <input type="text" name="quantity" id="quantity"><br>
+			  Item type: <input type="text" name="itemType" id="itemType"><br>
+			  Value: <input type="text" name="tradeValue" id="tradeValue"><br>
+			  Security description: <input type="text" name="securityDescription" id="securityDescription"><br>
+			  Trade ID:<input type="text" name="tradeID" id="tradeID"><br>
+			  <input type="submit" value="Submit">
+		 </form> 
+	</body>
+</html>
